@@ -1,0 +1,1 @@
+const imageUrlRecipeOfDay = 'https://loremflickr.com/200/400/food';

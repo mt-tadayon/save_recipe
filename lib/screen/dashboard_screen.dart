@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:saverecipe/utils/responsive_layout.dart';
+import 'package:saverecipe/widgets/wave_border_card.dart';
 
 class DashboardScreen extends StatelessWidget {
+  Widget heightPlaceholder(bool isMobileScreen) => SizedBox(
+        height: isMobileScreen ? 20.0 : 30.0,
+      );
+
   @override
   Widget build(BuildContext context) {
     var isMobileScreen = ResponsiveLayout.isSmallScreen(context);
-
-    const imageUrlRecipeOfDay = 'https://loremflickr.com/200/400/food';
 
     return Scaffold(
       body: CustomScrollView(
@@ -23,61 +26,36 @@ class DashboardScreen extends StatelessWidget {
             ),
           ),
           SliverPadding(
-            padding: EdgeInsets.symmetric(
-                vertical: isMobileScreen ? 40.0 : 50.0,
-                horizontal: isMobileScreen ? 20.0 : 40.0),
+            padding: EdgeInsets.only(
+              top: isMobileScreen ? 40.0 : 50.0,
+              bottom: isMobileScreen ? 40.0 : 50.0,
+              left: isMobileScreen ? 20.0 : 30.0,
+            ),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 Text(
                   'Recipe of the day',
-                  style: TextStyle(
-                    fontSize: 20.0,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                heightPlaceholder(isMobileScreen),
+                WaveBorderCard(
+                  recipeCardName: "Pancake",
+                ),
+                heightPlaceholder(isMobileScreen),
+                Text(
+                  "Categories",
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                heightPlaceholder(isMobileScreen),
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: 200),
+                  child: ListView.separated(
+                    itemBuilder: (context, index) =>
+                        WaveBorderCard(recipeCardName: "Real Data", width: 200),
+                    separatorBuilder: (context, index) => SizedBox(width: 20.0),
+                    itemCount: 3,
+                    scrollDirection: Axis.horizontal,
                   ),
-                ),
-                SizedBox(
-                  height: isMobileScreen ? 20.0 : 30.0,
-                ),
-                Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    Container(
-                      height: 200.0,
-                      width: 400.0,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            bottomRight: Radius.circular(30.0),
-                          ),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(imageUrlRecipeOfDay),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0x66000000),
-                                offset: Offset(3, 3),
-                                blurRadius: 6.0)
-                          ]),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(bottom: isMobileScreen ? 10 : 30),
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        padding:
-                            EdgeInsets.only(left: isMobileScreen ? 10.0 : 20.0),
-                        height: isMobileScreen ? 40 : 200,
-                        width: isMobileScreen ? 300 : 500,
-                        decoration: BoxDecoration(
-                          color: const Color(0xCCFFFFFF),
-                          borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(30),
-                          ),
-                        ),
-                        child: Text('Pancakes', style: TextStyle(fontSize: 20.0),),
-                      ),
-                    ),
-                  ],
                 )
               ]),
             ),
