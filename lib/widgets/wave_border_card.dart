@@ -4,9 +4,14 @@ import 'package:saverecipe/utils/responsive_layout.dart';
 
 class WaveBorderCard extends StatelessWidget {
   final String recipeCardName;
+  final String imageUrl;
   final double width;
 
-  const WaveBorderCard({Key key, this.recipeCardName = "", this.width = 350})
+  const WaveBorderCard(
+      {Key key,
+      this.recipeCardName = "",
+      this.width = 350,
+      this.imageUrl = kImageUrlRecipeOfDay})
       : super(key: key);
 
   @override
@@ -18,14 +23,14 @@ class WaveBorderCard extends StatelessWidget {
         Container(
           height: 200.0,
           width: width,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(30.0),
               bottomRight: Radius.circular(30.0),
             ),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: NetworkImage(imageUrlRecipeOfDay),
+              image: NetworkImage(imageUrl),
             ),
             boxShadow: [
               BoxShadow(

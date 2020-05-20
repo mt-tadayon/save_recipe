@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:saverecipe/provider/app_provider.dart';
 import 'package:saverecipe/utils/responsive_layout.dart';
 import 'package:saverecipe/widgets/wave_border_card.dart';
 
@@ -49,12 +51,19 @@ class DashboardScreen extends StatelessWidget {
                 heightPlaceholder(isMobileScreen),
                 ConstrainedBox(
                   constraints: BoxConstraints(maxHeight: 200),
-                  child: ListView.separated(
-                    itemBuilder: (context, index) =>
-                        WaveBorderCard(recipeCardName: "Real Data", width: 200),
-                    separatorBuilder: (context, index) => SizedBox(width: 20.0),
-                    itemCount: 3,
-                    scrollDirection: Axis.horizontal,
+                  child: Consumer<AppProvider>(
+                    builder: (context, appProvider, child) {
+                      return ListView.separated(
+                        itemBuilder: (context, index) => WaveBorderCard(
+                          recipeCardName: appProvider.categories[index].name,
+                          width: 200,
+                        ),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(width: 20.0),
+                        itemCount: appProvider.categories.length,
+                        scrollDirection: Axis.horizontal,
+                      );
+                    },
                   ),
                 )
               ]),

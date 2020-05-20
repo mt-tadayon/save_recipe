@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:saverecipe/provider/app_provider.dart';
 import 'package:saverecipe/screen/dashboard_screen.dart';
 
 void main() {
@@ -15,7 +17,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: DashboardScreen(),
+      home: ChangeNotifierProvider(
+        create: (context) => AppProvider(),
+        child: DashboardScreen(),
+      ),
     );
   }
 }

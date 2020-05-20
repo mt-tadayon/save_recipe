@@ -1,1 +1,1 @@
-const imageUrlRecipeOfDay = 'https://loremflickr.com/200/400/food';
+const kImageUrlRecipeOfDay = 'https://loremflickr.com/200/400/food';
