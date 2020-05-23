@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:saverecipe/models/category_model.dart';
 import 'package:saverecipe/provider/app_provider.dart';
+import 'package:saverecipe/screen/category_screen.dart';
 import 'package:saverecipe/utils/responsive_layout.dart';
 import 'package:saverecipe/widgets/wave_border_card.dart';
 
@@ -17,6 +19,22 @@ class DashboardScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                  onPressed: () {
+                    print("Works");
+                    Provider.of<AppProvider>(context, listen: false)
+                        .addCategory(CategoryModel("Italian"));
+                  },
+                  icon: Icon(
+                    Icons.add,
+                    size: 48,
+                  ),
+                ),
+              )
+            ],
             stretch: true,
             backgroundColor: Colors.transparent,
             expandedHeight: 300.0,
@@ -54,9 +72,40 @@ class DashboardScreen extends StatelessWidget {
                   child: Consumer<AppProvider>(
                     builder: (context, appProvider, child) {
                       return ListView.separated(
-                        itemBuilder: (context, index) => WaveBorderCard(
-                          recipeCardName: appProvider.categories[index].name,
-                          width: 200,
+                        itemBuilder: (context, index) => GestureDetector(
+                          child: WaveBorderCard(
+                            recipeCardName: appProvider.categories[index].name,
+                            width: 200,
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animationOne, animationTwo) =>
+                                        CategoryScreen(
+                                  categoryName:
+                                      appProvider.categories[index].name,
+                                ),
+                                transitionsBuilder: (context, animationOne,
+                                    animationTwo, child) {
+                                  var begin = Offset(0.0, 1.0);
+                                  var end = Offset.zero;
+                                  var curve = Curves.ease;
+
+                                  var tween =
+                                      Tween(begin: begin, end: end).chain(
+                                    CurveTween(curve: curve),
+                                  );
+
+                                  return SlideTransition(
+                                    position: animationOne.drive(tween),
+                                    child: child,
+                                  );
+                                },
+                                transitionDuration: Duration(seconds: 3),
+                              ),
+                            );
+                          },
                         ),
                         separatorBuilder: (context, index) =>
                             SizedBox(width: 20.0),

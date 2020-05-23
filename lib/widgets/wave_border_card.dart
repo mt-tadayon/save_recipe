@@ -54,9 +54,14 @@ class WaveBorderCard extends StatelessWidget {
                 bottomRight: Radius.circular(30),
               ),
             ),
-            child: Text(
-              recipeCardName,
-              style: TextStyle(fontSize: 20.0),
+            child: Hero(
+              tag: recipeCardName,
+              child: Material(
+                child: Text(
+                  recipeCardName,
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
             ),
           ),
         ),
