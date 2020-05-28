@@ -57,6 +57,7 @@ class WaveBorderCard extends StatelessWidget {
             child: Hero(
               tag: recipeCardName,
               child: Material(
+                color: Colors.transparent,
                 child: Text(
                   recipeCardName,
                   style: TextStyle(fontSize: 20.0),

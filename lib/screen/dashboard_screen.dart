@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:saverecipe/models/category_model.dart';
 import 'package:saverecipe/provider/app_provider.dart';
+import 'package:saverecipe/screen/add_recipe_screen.dart';
 import 'package:saverecipe/screen/category_screen.dart';
 import 'package:saverecipe/utils/responsive_layout.dart';
 import 'package:saverecipe/widgets/wave_border_card.dart';
@@ -24,9 +24,15 @@ class DashboardScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: IconButton(
                   onPressed: () {
-                    print("Works");
-                    Provider.of<AppProvider>(context, listen: false)
-                        .addCategory(CategoryModel("Italian"));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            ChangeNotifierProvider<AppProvider>(
+                                create: (context) => AppProvider(),
+                                child: AddRecipeScreen()),
+                      ),
+                    );
                   },
                   icon: Icon(
                     Icons.add,
