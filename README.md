@@ -4,8 +4,8 @@
 This application should help you to save a recipe. We work on this on our live stream together.
 If you want to follow along, feel free to check the live streams out.
 
-[Flutter Explained - Recipe App](https://www.youtube.com/playlist?list=PLq83k-ITj6lR4sHrlK_FvpMdwgZyhXdv5)
-[Flutter Explained - Live Streams](https://flutterexplained.live)
-[Our Company Website](https://myracledesign.de)
+- [Flutter Explained - Recipe App](https://www.youtube.com/playlist?list=PLq83k-ITj6lR4sHrlK_FvpMdwgZyhXdv5)
+- [Flutter Explained - Live Streams](https://flutterexplained.live)
+- [Our Company Website](https://myracledesign.de)
 
 
