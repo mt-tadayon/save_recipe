@@ -4,6 +4,7 @@ import 'package:saverecipe/provider/app_provider.dart';
 import 'package:saverecipe/screen/add_recipe_screen.dart';
 import 'package:saverecipe/screen/category_screen.dart';
 import 'package:saverecipe/utils/responsive_layout.dart';
+import 'package:saverecipe/widgets/custom_app_bar.dart';
 import 'package:saverecipe/widgets/wave_border_card.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -19,36 +20,46 @@ class DashboardScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            ChangeNotifierProvider<AppProvider>(
-                                create: (context) => AppProvider(),
-                                child: AddRecipeScreen()),
-                      ),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.add,
-                    size: 48,
-                  ),
-                ),
-              )
-            ],
             stretch: true,
             backgroundColor: Colors.transparent,
             expandedHeight: 300.0,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Image(
-                image: NetworkImage('https://loremflickr.com/300/300/food'),
-                fit: BoxFit.cover,
-              ),
+            flexibleSpace: Stack(
+              children: [
+                FlexibleSpaceBar(
+                  background: Image(
+                    image: NetworkImage('https://loremflickr.com/300/300/food'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Align(
+                  child: CustomAppBar(
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    ChangeNotifierProvider<AppProvider>(
+                                  create: (context) => AppProvider(),
+                                  child: AddRecipeScreen(),
+                                ),
+                              ),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 48,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  alignment: Alignment.topCenter,
+                )
+              ],
             ),
           ),
           SliverPadding(
