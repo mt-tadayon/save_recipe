@@ -46,7 +46,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                     bottom: -4,
                     right: -4,
                     child: Container(
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.85,
                       width: MediaQuery.of(context).size.width * 0.8,
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -61,52 +61,112 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                       ),
                     ),
                   ),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'Recipe Name'),
-                        ),
-                        Consumer<AppProvider>(
-                            builder: (context, appProvider, child) {
-                          return DropdownButtonFormField(
-                            value: dropdownValue,
-                            items: appProvider.categories
-                                .map(
-                                  (category) => DropdownMenuItem<String>(
-                                    value: category.name,
-                                    child: Text(category.name),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 30.0,
+                      right: 30,
+                      bottom: 30,
+                      top: MediaQuery.of(context).size.height * 0.15,
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  child: TextFormField(
+                                    decoration: InputDecoration.collapsed(
+                                      hintText: 'Recipe Name',
+                                    ),
                                   ),
-                                )
-                                .toList(),
-                            onChanged: (selectedCategoryName) {
-                              setState(() {
-                                dropdownValue = selectedCategoryName;
-                              });
-                            },
-                          );
-                        }),
-                        _image == null
-                            ? IconButton(
-                                icon: Icon(
-                                  Icons.camera_enhance,
-                                  size: 32.0,
+                                  decoration: BoxDecoration(
+                                      color: kWhite,
+                                      borderRadius: BorderRadius.circular(25),
+                                      border: Border.all(color: kBorderColor)),
+                                  height: 50,
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.only(left: 20),
                                 ),
-                                onPressed: () async {
-                                  _image = await ImagePicker.pickImage(
-                                      source: ImageSource.gallery);
-                                  setState(() {});
-                                },
-                              )
-                            : Image.file(_image),
-                        FlatButton(
-                          color: Colors.pink,
-                          child: Text('Submit'),
-                          onPressed: () {},
-                        )
-                      ],
+                                Consumer<AppProvider>(
+                                    builder: (context, appProvider, child) {
+                                  return DropdownButtonFormField(
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          borderSide:
+                                              BorderSide(color: kBorderColor)),
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 20),
+                                      filled: true,
+                                      fillColor: kWhite,
+                                    ),
+                                    value: dropdownValue,
+                                    items: appProvider.categories
+                                        .map(
+                                          (category) =>
+                                              DropdownMenuItem<String>(
+                                            value: category.name,
+                                            child: Text(category.name),
+                                          ),
+                                        )
+                                        .toList(),
+                                    onChanged: (selectedCategoryName) {
+                                      setState(() {
+                                        dropdownValue = selectedCategoryName;
+                                      });
+                                    },
+                                  );
+                                }),
+                                Container(
+                                    height: MediaQuery.of(context).size.height * 0.30,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: kWhite,
+                                      borderRadius: BorderRadius.circular(30),
+                                      border: Border.all(
+                                        color: kBorderColor,
+                                      ),
+                                    ),
+                                    child: _image == null
+                                        ? IconButton(
+                                            icon: Icon(
+                                              Icons.camera,
+                                              size: 60.0,
+                                            ),
+                                            onPressed: () async {
+                                              _image =
+                                                  await ImagePicker.pickImage(
+                                                      source:
+                                                          ImageSource.gallery);
+                                              setState(() {});
+                                            },
+                                          )
+                                        : Image.file(_image)),
+                              ],
+                            ),
+                          ),
+                          Spacer(),
+                          RaisedButton(
+                            padding: EdgeInsets.all(15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              side: BorderSide(color: kBorderColor),
+                            ),
+                            child: Text(
+                              'Submit',
+                              style: TextStyle(color: kWhite, fontSize: 18),
+                            ),
+                            color: Theme.of(context).buttonColor,
+                            onPressed: () {},
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],

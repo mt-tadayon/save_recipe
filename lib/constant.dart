@@ -15,4 +15,5 @@ const kBoxShadow = const BoxShadow(
 );
 
 const kBorderColor = const Color(0xFF707070);
-
+const kWhite = const Color(0xffffffff);
+const kPrimaryButtonColor = const Color(0xff6087AE);
