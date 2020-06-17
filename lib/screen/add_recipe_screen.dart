@@ -61,21 +61,20 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 30.0,
-                      right: 30,
-                      bottom: 30,
-                      top: MediaQuery.of(context).size.height * 0.15,
-                    ),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.5,
-                            child: Column(
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 30.0,
+                        right: 30,
+                        bottom: 30,
+                        top: MediaQuery.of(context).size.height * 0.15,
+                      ),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
@@ -92,6 +91,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                   alignment: Alignment.center,
                                   padding: EdgeInsets.only(left: 20),
                                 ),
+                                SizedBox(height: 20),
                                 Consumer<AppProvider>(
                                     builder: (context, appProvider, child) {
                                   return DropdownButtonFormField(
@@ -123,8 +123,10 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                     },
                                   );
                                 }),
+                                SizedBox(height: 20),
                                 Container(
-                                    height: MediaQuery.of(context).size.height * 0.30,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.30,
                                     width: double.infinity,
                                     decoration: BoxDecoration(
                                       color: kWhite,
@@ -150,22 +152,22 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                         : Image.file(_image)),
                               ],
                             ),
-                          ),
-                          Spacer(),
-                          RaisedButton(
-                            padding: EdgeInsets.all(15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                              side: BorderSide(color: kBorderColor),
-                            ),
-                            child: Text(
-                              'Submit',
-                              style: TextStyle(color: kWhite, fontSize: 18),
-                            ),
-                            color: Theme.of(context).buttonColor,
-                            onPressed: () {},
-                          )
-                        ],
+                            SizedBox(height: 20),
+                            RaisedButton(
+                              padding: EdgeInsets.all(15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                side: BorderSide(color: kBorderColor),
+                              ),
+                              child: Text(
+                                'Submit',
+                                style: TextStyle(color: kWhite, fontSize: 18),
+                              ),
+                              color: Theme.of(context).buttonColor,
+                              onPressed: () {},
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   )
