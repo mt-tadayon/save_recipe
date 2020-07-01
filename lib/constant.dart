@@ -14,6 +14,7 @@ const kBoxShadow = const BoxShadow(
   offset: Offset(-2, -2),
 );
 
+const kBoxShadowColor = Color(0x66000000);
 const kBorderColor = const Color(0xFF707070);
 const kWhite = const Color(0xffffffff);
 const kPrimaryButtonColor = const Color(0xff6087AE);

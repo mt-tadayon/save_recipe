@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:saverecipe/constant.dart';
 import 'package:saverecipe/utils/responsive_layout.dart';
+import 'package:saverecipe/widgets/lazy_network_image.dart';
+
+const radius = BorderRadius.only(
+  topLeft: Radius.circular(30.0),
+  bottomRight: Radius.circular(30.0),
+);
 
 class WaveBorderCard extends StatelessWidget {
   final String recipeCardName;
@@ -17,24 +23,24 @@ class WaveBorderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var isMobileScreen = ResponsiveLayout.isSmallScreen(context);
+
     return Stack(
       alignment: Alignment.bottomLeft,
       children: [
         Container(
           height: 200.0,
           width: width,
+          child: ClipRRect(
+            borderRadius: radius,
+            child: LazyNetworkImage(
+              imageUrl: imageUrl,
+            ),
+          ),
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0),
-            ),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(imageUrl),
-            ),
+            borderRadius: radius,
             boxShadow: [
               BoxShadow(
-                color: Color(0x66000000),
+                color: kBoxShadowColor,
                 offset: Offset(3, 3),
                 blurRadius: 6.0,
               )

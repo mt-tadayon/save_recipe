@@ -23,7 +23,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   final _formKey = GlobalKey<FormState>();
   String dropdownValue;
   File _image;
-  bool isImageSelected = false;
+  bool isImageErrorVisible = false;
 
   @override
   void initState() {
@@ -35,6 +35,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       body: Container(
         decoration: kBackground,
         child: Column(
@@ -166,11 +168,14 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                                 await ImagePicker.pickImage(
                                                     source:
                                                         ImageSource.gallery);
-                                            setState(() {});
+                                            setState(() {
+                                              isImageErrorVisible =
+                                                  _image == null;
+                                            });
                                           },
                                         ),
                                       ),
-                                      isImageSelected
+                                      isImageErrorVisible
                                           ? Align(
                                               alignment: Alignment.bottomCenter,
                                               child: Padding(
@@ -202,10 +207,10 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                               ),
                               color: Theme.of(context).buttonColor,
                               onPressed: () {
-                                isImageSelected = _image == null;
+                                isImageErrorVisible = _image == null;
                                 setState(() {});
                                 if (_formKey.currentState.validate() &&
-                                    !isImageSelected) {
+                                    !isImageErrorVisible) {
                                   //TODO: save data on db
                                   Navigator.pop(context);
                                 }

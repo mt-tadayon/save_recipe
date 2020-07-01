@@ -5,6 +5,7 @@ import 'package:saverecipe/screen/add_recipe_screen.dart';
 import 'package:saverecipe/screen/category_screen.dart';
 import 'package:saverecipe/utils/responsive_layout.dart';
 import 'package:saverecipe/widgets/custom_app_bar.dart';
+import 'package:saverecipe/widgets/lazy_network_image.dart';
 import 'package:saverecipe/widgets/wave_border_card.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -26,10 +27,8 @@ class DashboardScreen extends StatelessWidget {
             flexibleSpace: Stack(
               children: [
                 FlexibleSpaceBar(
-                  background: Image(
-                    image: NetworkImage('https://loremflickr.com/300/300/food'),
-                    fit: BoxFit.cover,
-                  ),
+                  background: LazyNetworkImage(
+                      imageUrl: 'https://loremflickr.com/300/300/food'),
                 ),
                 Align(
                   child: CustomAppBar(
@@ -63,10 +62,9 @@ class DashboardScreen extends StatelessWidget {
             ),
           ),
           SliverPadding(
-            padding: EdgeInsets.only(
-              top: isMobileScreen ? 40.0 : 50.0,
-              bottom: isMobileScreen ? 40.0 : 50.0,
-              left: isMobileScreen ? 20.0 : 30.0,
+            padding: EdgeInsets.symmetric(
+              vertical: isMobileScreen ? 40.0 : 50.0,
+              horizontal: isMobileScreen ? 20.0 : 30.0,
             ),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
