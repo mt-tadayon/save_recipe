@@ -1,18 +1,21 @@
 import 'package:flutter/foundation.dart';
-import 'package:saverecipe/constant.dart';
 import 'package:saverecipe/models/category_model.dart';
+import 'package:saverecipe/repository/category_repo.dart';
 
 class AppProvider extends ChangeNotifier {
-  final List<CategoryModel> _categories = [
-    CategoryModel("Noodles", imageUrl: kImageUrlRecipeOfDay),
-    CategoryModel('Rice', imageUrl: kImageUrlRecipeOfDay),
-    CategoryModel('Chicken', imageUrl: kImageUrlRecipeOfDay),
-    CategoryModel('Beef', imageUrl: kImageUrlRecipeOfDay),
-    CategoryModel('Veggie', imageUrl: kImageUrlRecipeOfDay)
-  ];
+  AppProvider() {
+    initCategories();
+  }
+
+  List<CategoryModel> _categories = [];
 
   void addCategory(CategoryModel newCategory) {
     _categories.add(newCategory);
+    notifyListeners();
+  }
+
+  void initCategories() async {
+    _categories = await CategoryRepo().readCategories();
     notifyListeners();
   }
 

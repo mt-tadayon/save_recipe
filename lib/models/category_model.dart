@@ -1,6 +1,14 @@
-class CategoryModel {
-  String name;
-  String imageUrl;
+import 'package:hive/hive.dart';
+part 'category_model.g.dart';
 
-  CategoryModel(this.name, {this.imageUrl});
+@HiveType(typeId: 0)
+class CategoryModel {
+  @HiveField(0)
+  String name;
+  @HiveField(1)
+  String imageUrl;
+  @HiveField(2)
+  int id;
+
+  CategoryModel(this.name, {this.imageUrl, this.id});
 }

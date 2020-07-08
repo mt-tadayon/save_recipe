@@ -17,11 +17,18 @@ dependencies:
   image_picker: ^0.6.6+5
   shimmer: ^1.1.1
   transparent_image: ^1.0.0
+  hive: ^1.4.1+1
+  hive_flutter: ^0.3.0+2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   pedantic: ^1.9.0
+  build_runner: ^1.10.0
+  hive_generator: ^0.7.0+2
+
+dependency_overrides:
+  dartx: ^0.4.2
 
 flutter:
   uses-material-design: true
