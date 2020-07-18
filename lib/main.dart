@@ -20,15 +20,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      locale: DevicePreview.of(context).locale,
-      builder: DevicePreview.appBuilder,
-      title: 'Flutter Demo',
-      theme: CustomTheme().light,
-      home: ChangeNotifierProvider(
-        create: (context) => AppProvider(),
-        child: MainScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => AppProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        locale: DevicePreview.of(context).locale,
+        builder: DevicePreview.appBuilder,
+        title: 'Flutter Demo',
+        theme: CustomTheme().light,
+        home: MainScreen(),
       ),
     );
   }

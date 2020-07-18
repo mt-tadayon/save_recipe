@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:saverecipe/constant.dart';
+import 'package:saverecipe/provider/add_category_provider.dart';
 import 'package:saverecipe/provider/app_provider.dart';
+import 'package:saverecipe/screen/add_category_screen.dart';
 import 'package:saverecipe/screen/add_recipe_screen.dart';
 import 'package:saverecipe/screen/category_screen.dart';
 import 'package:saverecipe/utils/responsive_layout.dart';
@@ -87,44 +92,76 @@ class DashboardScreen extends StatelessWidget {
                   child: Consumer<AppProvider>(
                     builder: (context, appProvider, child) {
                       return ListView.separated(
-                        itemBuilder: (context, index) => GestureDetector(
-                          child: WaveBorderCard(
-                            recipeCardName: appProvider.categories[index].name,
-                            width: 200,
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              PageRouteBuilder(
-                                pageBuilder:
-                                    (context, animationOne, animationTwo) =>
-                                        CategoryScreen(
-                                  categoryName:
-                                      appProvider.categories[index].name,
+                        itemBuilder: (context, index) {
+                          if (index == appProvider.categories.length) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ChangeNotifierProvider(
+                                      create: (_) => AddCategoryProvider(),
+                                      child: AddCategoryScreen(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                margin:
+                                    EdgeInsets.only(right: 8.0, bottom: 8.0),
+                                child: Icon(
+                                  Icons.add_circle,
+                                  size: 60,
+                                  color: const Color(0xFF000000),
                                 ),
-                                transitionsBuilder: (context, animationOne,
-                                    animationTwo, child) {
-                                  var begin = Offset(0.0, 1.0);
-                                  var end = Offset.zero;
-                                  var curve = Curves.ease;
-
-                                  var tween =
-                                      Tween(begin: begin, end: end).chain(
-                                    CurveTween(curve: curve),
-                                  );
-
-                                  return SlideTransition(
-                                    position: animationOne.drive(tween),
-                                    child: child,
-                                  );
-                                },
-                                transitionDuration: Duration(seconds: 3),
+                                decoration: kWaveBoxDecoration.copyWith(
+                                  color: Color(0xffe0e0e0),
+                                ),
+                                width: 200,
                               ),
                             );
-                          },
-                        ),
+                          }
+
+                          return GestureDetector(
+                            child: WaveBorderCard(
+                              recipeCardName:
+                                  appProvider.categories[index].name,
+                              width: 200,
+                            ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder:
+                                      (context, animationOne, animationTwo) =>
+                                          CategoryScreen(
+                                    categoryName:
+                                        appProvider.categories[index].name,
+                                  ),
+                                  transitionsBuilder: (context, animationOne,
+                                      animationTwo, child) {
+                                    var begin = Offset(0.0, 1.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween =
+                                        Tween(begin: begin, end: end).chain(
+                                      CurveTween(curve: curve),
+                                    );
+
+                                    return SlideTransition(
+                                      position: animationOne.drive(tween),
+                                      child: child,
+                                    );
+                                  },
+                                  transitionDuration: Duration(seconds: 3),
+                                ),
+                              );
+                            },
+                          );
+                        },
                         separatorBuilder: (context, index) =>
                             SizedBox(width: 20.0),
-                        itemCount: appProvider.categories.length,
+                        itemCount: appProvider.categories.length + 1,
                         scrollDirection: Axis.horizontal,
                       );
                     },

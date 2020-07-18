@@ -14,6 +14,22 @@ const kBoxShadow = const BoxShadow(
   offset: Offset(-2, -2),
 );
 
+const kWaveBorderRadius = BorderRadius.only(
+  topLeft: Radius.circular(30.0),
+  bottomRight: Radius.circular(30.0),
+);
+
+const kWaveBoxDecoration = BoxDecoration(
+  borderRadius: kWaveBorderRadius,
+  boxShadow: [
+    BoxShadow(
+      color: kBoxShadowColor,
+      offset: Offset(3, 3),
+      blurRadius: 6.0,
+    )
+  ],
+);
+
 const kBoxShadowColor = Color(0x66000000);
 const kBorderColor = const Color(0xFF707070);
 const kWhite = const Color(0xffffffff);

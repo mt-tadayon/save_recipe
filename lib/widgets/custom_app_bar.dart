@@ -20,6 +20,7 @@ class CustomAppBar extends StatelessWidget {
         ),
       ),
       child: AppBar(
+        centerTitle: true,
         title: Text(
           title,
           style: const TextStyle(

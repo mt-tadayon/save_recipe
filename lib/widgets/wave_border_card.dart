@@ -3,11 +3,6 @@ import 'package:saverecipe/constant.dart';
 import 'package:saverecipe/utils/responsive_layout.dart';
 import 'package:saverecipe/widgets/lazy_network_image.dart';
 
-const radius = BorderRadius.only(
-  topLeft: Radius.circular(30.0),
-  bottomRight: Radius.circular(30.0),
-);
-
 class WaveBorderCard extends StatelessWidget {
   final String recipeCardName;
   final String imageUrl;
@@ -29,23 +24,15 @@ class WaveBorderCard extends StatelessWidget {
       children: [
         Container(
           height: 200.0,
+          margin: EdgeInsets.only(bottom: 8.0),
           width: width,
           child: ClipRRect(
-            borderRadius: radius,
+            borderRadius: kWaveBorderRadius,
             child: LazyNetworkImage(
               imageUrl: imageUrl,
             ),
           ),
-          decoration: BoxDecoration(
-            borderRadius: radius,
-            boxShadow: [
-              BoxShadow(
-                color: kBoxShadowColor,
-                offset: Offset(3, 3),
-                blurRadius: 6.0,
-              )
-            ],
-          ),
+          decoration: kWaveBoxDecoration,
         ),
         Padding(
           padding: EdgeInsets.only(bottom: isMobileScreen ? 10 : 30),
