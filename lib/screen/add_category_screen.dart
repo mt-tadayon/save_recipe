@@ -48,9 +48,14 @@ class AddCategoryScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   SubmitButton(
                     onPressed: () async {
-                      bool savedSuccessful = await Provider.of<
-                              AddCategoryProvider>(context, listen: false)
-                          .saveCategory(context, categoryNameController.text);
+                      bool savedSuccessful =
+                          await Provider.of<AddCategoryProvider>(
+                        context,
+                        listen: false,
+                      ).saveCategory(
+                        context,
+                        categoryNameController.text,
+                      );
 
                       if (savedSuccessful) {
                         Navigator.pop(context);

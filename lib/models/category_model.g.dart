@@ -19,7 +19,7 @@ class CategoryModelAdapter extends TypeAdapter<CategoryModel> {
     return CategoryModel(
       fields[0] as String,
       imageUrl: fields[1] as String,
-      id: fields[2] as int,
+      id: fields[2] as String,
     );
   }
 

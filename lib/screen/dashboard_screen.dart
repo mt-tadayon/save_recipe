@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:saverecipe/constant.dart';
@@ -123,6 +121,56 @@ class DashboardScreen extends StatelessWidget {
                           }
 
                           return GestureDetector(
+                            onLongPress: () {
+                              return showDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      actionsPadding:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      elevation: 10,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(20),
+                                        ),
+                                      ),
+                                      title: Text('Delete Category'),
+                                      content: SingleChildScrollView(
+                                        child: (ListBody(
+                                          children: <Widget>[
+                                            Text(
+                                                'You can delete this category'),
+                                            Text(
+                                                'To delete this category click on delete button'),
+                                          ],
+                                        )),
+                                      ),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text('Cancel'),
+                                          onPressed: () {
+                                            //TODO: Close the dialog
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                        FlatButton(
+                                          child: Text('Delete'),
+                                          onPressed: () {
+                                            //TODO: delete a category in db
+                                            //TODO: Be sure to delete all recipes in this category
+                                            Provider.of<AppProvider>(context,
+                                                    listen: false)
+                                                .deleteCategory(appProvider
+                                                    .categories[index]);
+                                            Navigator.pop(context);
+                                          },
+                                          color: const Color(0xffff0000),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
                             child: WaveBorderCard(
                               recipeCardName:
                                   appProvider.categories[index].name,

@@ -10,7 +10,7 @@ class CategoryRepo {
   
   void saveCategory (CategoryModel categoryModel) async {
     var box = await _box;
-    box.add(categoryModel);
+    box.put(categoryModel.id, categoryModel);
   }
 
   Future<List<CategoryModel>> readCategories () async {
@@ -23,7 +23,7 @@ class CategoryRepo {
     box.put(categoryModel.id, categoryModel);
   }
 
-  void deleteCategory(int id) async {
+  void deleteCategory(String id) async {
     var box = await _box;
     box.delete(id);
   }

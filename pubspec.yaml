@@ -19,6 +19,7 @@ dependencies:
   transparent_image: ^1.0.0
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
+  uuid: ^2.2.0
 
 dev_dependencies:
   flutter_test:
