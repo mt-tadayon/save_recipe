@@ -15,7 +15,6 @@ class AddCategoryProvider extends ChangeNotifier {
         Provider.of<AppProvider>(context, listen: false).categories;
     var category = CategoryModel(categoryName);
     if (categories.contains(category)) {
-      //TODO: Show user an alert box with hint
       return false;
     }
     Provider.of<AppProvider>(context, listen: false).addCategory(category);

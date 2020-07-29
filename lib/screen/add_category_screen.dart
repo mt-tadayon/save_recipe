@@ -8,6 +8,7 @@ import 'package:saverecipe/widgets/submit_button_widget.dart';
 
 class AddCategoryScreen extends StatelessWidget {
   final categoryNameController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -27,42 +28,73 @@ class AddCategoryScreen extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(left: 20.0),
-                    decoration: BoxDecoration(
-                      color: kWhite,
-                      borderRadius: BorderRadius.circular(25),
-                      border: Border.all(color: kBorderColor),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 10.0,
+              ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(left: 20.0),
+                      decoration: BoxDecoration(
+                        color: kWhite,
+                        borderRadius: BorderRadius.circular(25),
+                        border: Border.all(color: kBorderColor),
+                      ),
+                      height: 50,
+                      alignment: Alignment.center,
+                      child: TextFormField(
+                        controller: categoryNameController,
+                        decoration: InputDecoration.collapsed(
+                          hintText: "Category name",
+                        ),
+                        validator: (value) {
+                          return value.isEmpty
+                              ? "Please add a category name"
+                              : null;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                      ),
                     ),
-                    child: TextFormField(
-                      controller: categoryNameController,
-                      decoration:
-                          InputDecoration.collapsed(hintText: "Category name"),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  ImagePickerWidget(),
-                  SizedBox(height: 20),
-                  SubmitButton(
-                    onPressed: () async {
-                      bool savedSuccessful =
-                          await Provider.of<AddCategoryProvider>(
-                        context,
-                        listen: false,
-                      ).saveCategory(
-                        context,
-                        categoryNameController.text,
-                      );
+                    SizedBox(height: 20),
+                    ImagePickerWidget(),
+                    SizedBox(height: 20),
+                    Builder(
+                      builder: (context) => SubmitButton(
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            bool savedSuccessful =
+                                await Provider.of<AddCategoryProvider>(context,
+                                        listen: false)
+                                    .saveCategory(
+                              context,
+                              categoryNameController.text,
+                            );
 
-                      if (savedSuccessful) {
-                        Navigator.pop(context);
-                      }
-                    },
-                  )
-                ],
+                            if (savedSuccessful) {
+                              Navigator.pop(context);
+                            } else {
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Row(
+                                    children: [
+                                      Icon(Icons.error_outline),
+                                      SizedBox(width: 10.0),
+                                      Text("This category exists already"),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+                          }
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

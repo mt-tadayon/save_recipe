@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:saverecipe/screen/category_screen.dart';
-import 'package:saverecipe/screen/dashboard_screen.dart';
+import 'package:saverecipe/screen/dashboard/dashboard_screen.dart';
 import 'package:saverecipe/widgets/responsive_widget.dart';
 
 class MainScreen extends StatelessWidget {
