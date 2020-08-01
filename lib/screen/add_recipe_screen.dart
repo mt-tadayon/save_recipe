@@ -136,7 +136,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                   );
                                 }),
                                 SizedBox(height: 20),
-                                ImagePickerWidget()
+                                ImagePickerWidget(
+                                  //TODO: Fix the image picker
+                                )
                               ],
                             ),
                             SizedBox(height: 20),

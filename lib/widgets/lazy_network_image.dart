@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -9,8 +12,10 @@ const grey300 = const Color(0xFFE0E0E0);
 
 class LazyNetworkImage extends StatelessWidget {
   final String imageUrl;
+  final Uint8List imageFile;
 
-  const LazyNetworkImage({Key key, this.imageUrl}) : super(key: key);
+  const LazyNetworkImage({Key key, this.imageUrl, this.imageFile})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +29,16 @@ class LazyNetworkImage extends StatelessWidget {
           ),
         ),
       ),
-      FadeInImage.memoryNetwork(
-        placeholder: kTransparentImage,
-        image: imageUrl,
-        fit: BoxFit.cover,
-      ),
+      imageFile != null
+          ? Image.memory(
+              imageFile,
+              fit: BoxFit.cover,
+            )
+          : FadeInImage.memoryNetwork(
+              placeholder: kTransparentImage,
+              image: imageUrl,
+              fit: BoxFit.cover,
+            ),
     ]);
   }
 }

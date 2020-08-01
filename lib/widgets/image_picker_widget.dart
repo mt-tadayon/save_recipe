@@ -1,17 +1,14 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:saverecipe/constant.dart';
 
-class ImagePickerWidget extends StatefulWidget {
-  @override
-  _ImagePickerWidgetState createState() => _ImagePickerWidgetState();
-}
+class ImagePickerWidget extends StatelessWidget {
+  final File image;
+  final bool isImageErrorVisible;
+  final VoidCallback onPressed;
 
-class _ImagePickerWidgetState extends State<ImagePickerWidget> {
-  File _image;
-  bool isImageErrorVisible = false;
+  ImagePickerWidget(
+      {this.onPressed, this.image, this.isImageErrorVisible = false});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +21,9 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
         border: Border.all(
           color: kBorderColor,
         ),
-        image: _image != null
+        image: image != null
             ? DecorationImage(
-                image: FileImage(_image),
+                image: FileImage(image),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.5),
@@ -43,14 +40,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
                 Icons.camera,
               ),
               iconSize: 60,
-              onPressed: () async {
-                _image = await ImagePicker.pickImage(
-                  source: ImageSource.gallery,
-                );
-                setState(() {
-                  isImageErrorVisible = _image == null;
-                });
-              },
+              onPressed: onPressed,
             ),
           ),
           isImageErrorVisible

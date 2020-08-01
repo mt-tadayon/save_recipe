@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:saverecipe/constant.dart';
 import 'package:saverecipe/utils/responsive_layout.dart';
@@ -7,12 +9,14 @@ class WaveBorderCard extends StatelessWidget {
   final String recipeCardName;
   final String imageUrl;
   final double width;
+  final Uint8List imageFile;
 
   const WaveBorderCard(
       {Key key,
       this.recipeCardName = "",
       this.width = 350,
-      this.imageUrl = kImageUrlRecipeOfDay})
+      this.imageUrl = kImageUrlRecipeOfDay,
+      this.imageFile})
       : super(key: key);
 
   @override
@@ -30,6 +34,7 @@ class WaveBorderCard extends StatelessWidget {
             borderRadius: kWaveBorderRadius,
             child: LazyNetworkImage(
               imageUrl: imageUrl,
+              imageFile: imageFile,
             ),
           ),
           decoration: kWaveBoxDecoration,

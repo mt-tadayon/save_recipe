@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:saverecipe/constant.dart';
 import 'package:saverecipe/provider/add_category_provider.dart';
 import 'package:saverecipe/widgets/custom_app_bar.dart';
 import 'package:saverecipe/widgets/image_picker_widget.dart';
+import 'package:saverecipe/widgets/recipe_form_field.dart';
 import 'package:saverecipe/widgets/submit_button_widget.dart';
 
 class AddCategoryScreen extends StatelessWidget {
@@ -37,30 +37,19 @@ class AddCategoryScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(left: 20.0),
-                      decoration: BoxDecoration(
-                        color: kWhite,
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: kBorderColor),
-                      ),
-                      height: 50,
-                      alignment: Alignment.center,
-                      child: TextFormField(
-                        controller: categoryNameController,
-                        decoration: InputDecoration.collapsed(
-                          hintText: "Category name",
-                        ),
-                        validator: (value) {
-                          return value.isEmpty
-                              ? "Please add a category name"
-                              : null;
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                      ),
-                    ),
+                    RecipeFormField(
+                        categoryNameController: categoryNameController),
                     SizedBox(height: 20),
-                    ImagePickerWidget(),
+                    Consumer<AddCategoryProvider>(
+                      builder: (_, provider, __) {
+                        return ImagePickerWidget(
+                          onPressed: () async {
+                            provider.selectImage();
+                          },
+                          image: provider.image,
+                        );
+                      },
+                    ),
                     SizedBox(height: 20),
                     Builder(
                       builder: (context) => SubmitButton(

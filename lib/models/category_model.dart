@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:hive/hive.dart';
 part 'category_model.g.dart';
 
@@ -10,8 +12,10 @@ class CategoryModel {
   String imageUrl;
   @HiveField(2)
   String id;
+  @HiveField(3)
+  Uint8List file;
 
-  CategoryModel(this.name, {this.imageUrl, this.id});
+  CategoryModel(this.name, {this.imageUrl, this.id, this.file});
 
   @override
   bool operator ==(other) {
