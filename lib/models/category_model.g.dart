@@ -21,13 +21,13 @@ class CategoryModelAdapter extends TypeAdapter<CategoryModel> {
       imageUrl: fields[1] as String,
       id: fields[2] as String,
       file: fields[3] as Uint8List,
-    );
+    )..recipes = (fields[4] as HiveList)?.castHiveList();
   }
 
   @override
   void write(BinaryWriter writer, CategoryModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -35,7 +35,9 @@ class CategoryModelAdapter extends TypeAdapter<CategoryModel> {
       ..writeByte(2)
       ..write(obj.id)
       ..writeByte(3)
-      ..write(obj.file);
+      ..write(obj.file)
+      ..writeByte(4)
+      ..write(obj.recipes);
   }
 
   @override

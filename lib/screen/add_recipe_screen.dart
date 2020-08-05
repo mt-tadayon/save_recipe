@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:saverecipe/constant.dart';
+import 'package:saverecipe/models/category_model.dart';
 import 'package:saverecipe/provider/add_recipe_provider.dart';
 import 'package:saverecipe/provider/app_provider.dart';
 import 'package:saverecipe/widgets/custom_app_bar.dart';
@@ -23,12 +24,14 @@ class AddRecipeScreen extends StatefulWidget {
 
 class _AddRecipeScreenState extends State<AddRecipeScreen> {
   final _formKey = GlobalKey<FormState>();
-  String dropdownValue;
 
   @override
   void initState() {
-    dropdownValue =
-        Provider.of<AppProvider>(context, listen: false).categories[0].name;
+    var appProvider = Provider.of<AppProvider>(context, listen: false);
+    var addRecipeProvider =
+        Provider.of<AddRecipeProvider>(context, listen: false);
+
+    addRecipeProvider.setSelectedCategory(appProvider.categories[0]);
     super.initState();
   }
 
@@ -96,8 +99,10 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                   hintText: "Recipe Name",
                                 ),
                                 SizedBox(height: 20),
-                                Consumer<AppProvider>(
-                                    builder: (context, appProvider, child) {
+                                Consumer2<AppProvider, AddRecipeProvider>(
+                                    builder: (context, appProvider,
+                                        addRecipeProvider, child) {
+                                  // TODO: Check if the DropDown is still working
                                   return DropdownButtonFormField(
                                     decoration: InputDecoration(
                                       enabledBorder: OutlineInputBorder(
@@ -110,20 +115,20 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                       filled: true,
                                       fillColor: kWhite,
                                     ),
-                                    value: dropdownValue,
+                                    value: addRecipeProvider.selectedCategory,
                                     items: appProvider.categories
                                         .map(
                                           (category) =>
-                                              DropdownMenuItem<String>(
-                                            value: category.name,
+                                              DropdownMenuItem<CategoryModel>(
+                                            value: category,
                                             child: Text(category.name),
                                           ),
                                         )
                                         .toList(),
-                                    onChanged: (selectedCategoryName) {
-                                      setState(() {
-                                        dropdownValue = selectedCategoryName;
-                                      });
+                                    onChanged:
+                                        (CategoryModel selectedCategory) {
+                                      addRecipeProvider.setSelectedCategory(
+                                          selectedCategory);
                                     },
                                   );
                                 }),
@@ -136,6 +141,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                     isImageErrorVisible:
                                         addRecipeProvider.isImageErrorVisible,
                                     onPressed: () async {
+                                      // TODO: Remove Deprecation
                                       addRecipeProvider
                                           .setImage(await ImagePicker.pickImage(
                                         source: ImageSource.gallery,
