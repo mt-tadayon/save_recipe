@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:saverecipe/provider/app_provider.dart';
+import 'package:saverecipe/provider/add_recipe_provider.dart';
 import 'package:saverecipe/screen/add_recipe_screen.dart';
 import 'package:saverecipe/screen/dashboard/category_list.dart';
 import 'package:saverecipe/utils/responsive_layout.dart';
@@ -41,8 +41,8 @@ class DashboardScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    ChangeNotifierProvider<AppProvider>(
-                                  create: (context) => AppProvider(),
+                                    ChangeNotifierProvider<AddRecipeProvider>(
+                                  create: (context) => AddRecipeProvider(),
                                   child: AddRecipeScreen(),
                                 ),
                               ),

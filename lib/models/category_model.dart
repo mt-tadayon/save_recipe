@@ -5,7 +5,6 @@ part 'category_model.g.dart';
 
 @HiveType(typeId: 0)
 class CategoryModel {
-
   @HiveField(0)
   String name;
   @HiveField(1)
@@ -14,12 +13,15 @@ class CategoryModel {
   String id;
   @HiveField(3)
   Uint8List file;
+/*
+  @HiveList
+  List<Recipe> recipies;*/
 
   CategoryModel(this.name, {this.imageUrl, this.id, this.file});
 
   @override
   bool operator ==(other) {
-    if(other is CategoryModel) {
+    if (other is CategoryModel) {
       return this.name == other.name;
     }
     return false;

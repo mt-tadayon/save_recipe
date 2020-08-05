@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:saverecipe/provider/add_category_provider.dart';
+import 'package:saverecipe/provider/app_provider.dart';
 import 'package:saverecipe/widgets/custom_app_bar.dart';
 import 'package:saverecipe/widgets/image_picker_widget.dart';
 import 'package:saverecipe/widgets/recipe_form_field.dart';
@@ -38,7 +39,15 @@ class AddCategoryScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     RecipeFormField(
-                        categoryNameController: categoryNameController),
+                      // TODO: Remove Controller and work with onSave
+                      textEditingController: categoryNameController,
+                      validator: (value) {
+                        return value.isEmpty
+                            ? "Please add a category name"
+                            : null;
+                      },
+                      hintText: "Category name",
+                    ),
                     SizedBox(height: 20),
                     Consumer<AddCategoryProvider>(
                       builder: (_, provider, __) {
@@ -55,13 +64,14 @@ class AddCategoryScreen extends StatelessWidget {
                       builder: (context) => SubmitButton(
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
+                            var appProvider = Provider.of<AppProvider>(context,
+                                listen: false);
+                            var addCategoryProvider =
+                                Provider.of<AddCategoryProvider>(context,
+                                    listen: false);
                             bool savedSuccessful =
-                                await Provider.of<AddCategoryProvider>(context,
-                                        listen: false)
-                                    .saveCategory(
-                              context,
-                              categoryNameController.text,
-                            );
+                                await addCategoryProvider.saveCategory(
+                                    appProvider, categoryNameController.text);
 
                             if (savedSuccessful) {
                               Navigator.pop(context);

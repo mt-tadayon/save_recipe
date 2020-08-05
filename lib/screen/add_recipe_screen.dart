@@ -1,11 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:saverecipe/constant.dart';
+import 'package:saverecipe/provider/add_recipe_provider.dart';
 import 'package:saverecipe/provider/app_provider.dart';
 import 'package:saverecipe/widgets/custom_app_bar.dart';
 import 'package:saverecipe/widgets/image_picker_widget.dart';
+import 'package:saverecipe/widgets/recipe_form_field.dart';
 import 'package:saverecipe/widgets/submit_button_widget.dart';
 
 const kBackground = const BoxDecoration(
@@ -23,8 +24,6 @@ class AddRecipeScreen extends StatefulWidget {
 class _AddRecipeScreenState extends State<AddRecipeScreen> {
   final _formKey = GlobalKey<FormState>();
   String dropdownValue;
-  File _image;
-  bool isImageErrorVisible = false;
 
   @override
   void initState() {
@@ -35,6 +34,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var addRecipeProvider =
+        Provider.of<AddRecipeProvider>(context, listen: false);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
@@ -81,27 +83,17 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  child: TextFormField(
-                                    decoration: InputDecoration.collapsed(
-                                      hintText: 'Recipe Name',
-                                    ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'Please provide a recipe name';
-                                      }
-                                      return null;
-                                    },
-                                    keyboardType: TextInputType.text,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(25),
-                                    border: Border.all(color: kBorderColor),
-                                  ),
-                                  height: 50,
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.only(left: 20),
+                                RecipeFormField(
+                                  onSaved: (String value) {
+                                    addRecipeProvider.setRecipeName = value;
+                                  },
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Please provide a recipe name';
+                                    }
+                                    return null;
+                                  },
+                                  hintText: "Recipe Name",
                                 ),
                                 SizedBox(height: 20),
                                 Consumer<AppProvider>(
@@ -136,20 +128,35 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                   );
                                 }),
                                 SizedBox(height: 20),
-                                ImagePickerWidget(
-                                  //TODO: Fix the image picker
+                                Consumer<AddRecipeProvider>(
+                                  builder:
+                                      (context, addRecipeProvider, child) =>
+                                          ImagePickerWidget(
+                                    image: addRecipeProvider.image,
+                                    isImageErrorVisible:
+                                        addRecipeProvider.isImageErrorVisible,
+                                    onPressed: () async {
+                                      addRecipeProvider
+                                          .setImage(await ImagePicker.pickImage(
+                                        source: ImageSource.gallery,
+                                      ));
+                                    },
+                                  ),
                                 )
                               ],
                             ),
                             SizedBox(height: 20),
                             SubmitButton(
-                              onPressed: () {
-                                isImageErrorVisible = _image == null;
-                                setState(() {});
+                              onPressed: () async {
+                                addRecipeProvider.checkImageError();
                                 if (_formKey.currentState.validate() &&
-                                    !isImageErrorVisible) {
-                                  //TODO: save data on db
-                                  Navigator.pop(context);
+                                    !addRecipeProvider.isImageErrorVisible) {
+                                  _formKey.currentState.save();
+
+                                  bool shouldNavigate =
+                                      await addRecipeProvider.saveRecipe();
+
+                                  if (shouldNavigate) Navigator.pop(context);
                                 }
                               },
                             )

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:saverecipe/models/category_model.dart';
@@ -23,7 +21,6 @@ class CategoryList extends StatelessWidget {
               }
 
               CategoryModel category = appProvider.categories[index];
-              print(File.fromRawPath(category.file));
               return GestureDetector(
                 onLongPress: () {
                   return showDialog(

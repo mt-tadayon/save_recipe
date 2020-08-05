@@ -4,10 +4,16 @@ import 'package:saverecipe/constant.dart';
 class RecipeFormField extends StatelessWidget {
   const RecipeFormField({
     Key key,
-    @required this.categoryNameController,
+    this.textEditingController,
+    this.onSaved,
+    this.validator,
+    this.hintText
   }) : super(key: key);
 
-  final TextEditingController categoryNameController;
+  final TextEditingController textEditingController;
+  final Function onSaved;
+  final FormFieldValidator<String> validator;
+  final String hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +27,12 @@ class RecipeFormField extends StatelessWidget {
       height: 50,
       alignment: Alignment.center,
       child: TextFormField(
-        controller: categoryNameController,
+        onSaved: onSaved,
+        controller: textEditingController ?? null,
         decoration: InputDecoration.collapsed(
-          hintText: "Category name",
+          hintText: hintText,
         ),
-        validator: (value) {
-          return value.isEmpty
-              ? "Please add a category name"
-              : null;
-        },
+        validator: validator,
       ),
     );
   }
