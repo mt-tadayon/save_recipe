@@ -5,6 +5,7 @@ import 'package:saverecipe/models/category_model.dart';
 import 'package:saverecipe/models/recipe_model.dart';
 import 'package:saverecipe/provider/app_provider.dart';
 import 'package:saverecipe/repository/category_repo.dart';
+import 'package:saverecipe/repository/recipe_repo.dart';
 
 class HiveDb {
   Future initHive() async {
@@ -15,6 +16,8 @@ class HiveDb {
     await Hive.registerAdapter(
       RecipeModelAdapter(),
     );
+    //TODO: clean up
+    RecipeRepo recipeRepo = RecipeRepo();
     initTestData();
   }
 

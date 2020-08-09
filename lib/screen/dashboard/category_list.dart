@@ -62,7 +62,7 @@ class CategoryList extends StatelessWidget {
                           child: child,
                         );
                       },
-                      transitionDuration: Duration(seconds: 3),
+                      transitionDuration: Duration(seconds: 1),
                     ),
                   );
                 },
