@@ -17,7 +17,7 @@ class MainScreen extends StatelessWidget {
             thickness: 2.0,
             width: 2.0,
           ),
-          Expanded(child: CategoryScreen(categoryName: "Null")),
+          Expanded(child: CategoryScreen(category: null)),
         ],
       ),
     );

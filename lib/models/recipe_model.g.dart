@@ -16,10 +16,11 @@ class RecipeModelAdapter extends TypeAdapter<RecipeModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return RecipeModel()
-      ..id = fields[0] as String
-      ..name = fields[1] as String
-      ..image = fields[2] as Uint8List;
+    return RecipeModel(
+      fields[1] as String,
+      fields[2] as Uint8List,
+      id: fields[0] as String,
+    );
   }
 
   @override

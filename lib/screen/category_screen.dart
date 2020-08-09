@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:saverecipe/models/category_model.dart';
 
 class CategoryScreen extends StatelessWidget {
-  final String categoryName;
+  final CategoryModel category;
 
-  CategoryScreen({this.categoryName});
+  CategoryScreen({this.category});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Hero(
-          tag: this.categoryName,
-          child: Center(
-            child: Material(
-              child: Text(
-                this.categoryName,
-                style: Theme.of(context).textTheme.headline5,
+      body: Column(
+        children: [
+          Container(
+            child: Hero(
+              tag: this.category.name,
+              child: Center(
+                child: Material(
+                  child: Text(
+                    this.category.name,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+          Text('${category.recipes[0].name}')
+        ],
       ),
     );
   }

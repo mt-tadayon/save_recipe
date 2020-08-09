@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:saverecipe/models/category_model.dart';
+import 'package:saverecipe/models/recipe_model.dart';
+import 'package:saverecipe/repository/recipe_repo.dart';
 
 class AddRecipeProvider extends ChangeNotifier {
   // TODO: Init somehow our selectedCategory
@@ -9,13 +12,23 @@ class AddRecipeProvider extends ChangeNotifier {
   File _image;
   bool _isImageErrorVisible = false;
   String _recipeName;
+  //TODO: user dependency injection
+  RecipeRepo _recipeRepo = RecipeRepo();
 
   Future<bool> saveRecipe() async {
-    // TODO: Save to hive db
-
-    // TODO: Receive the selected category where the recipe has to be saved
-    // TODO: After that we have to update the category
-    return false;
+    Uint8List imageByteArray = _image.readAsBytesSync();
+    RecipeModel recipe = RecipeModel(_recipeName, imageByteArray);
+    await _recipeRepo.saveRecipe(recipe);
+    _selectedCategory.recipes =
+        _selectedCategory.recipes ?? await _recipeRepo.createRecipeList();
+    _selectedCategory.recipes.add(recipe);
+    try {
+      await _selectedCategory.save();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   void set setRecipeName(String recipeName) => _recipeName = recipeName;

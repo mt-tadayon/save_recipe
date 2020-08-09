@@ -45,7 +45,7 @@ class CategoryList extends StatelessWidget {
                     PageRouteBuilder(
                       pageBuilder: (context, animationOne, animationTwo) =>
                           CategoryScreen(
-                        categoryName: category.name,
+                        category: category,
                       ),
                       transitionsBuilder:
                           (context, animationOne, animationTwo, child) {
