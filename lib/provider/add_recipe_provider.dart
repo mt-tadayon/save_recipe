@@ -38,8 +38,6 @@ class AddRecipeProvider extends ChangeNotifier {
 
   String get recipeName => _recipeName;
 
-  void setSelectedCategory(CategoryModel category) {
-    _selectedCategory = category;
-    notifyListeners();
-  }
+  void setSelectedCategory(CategoryModel category) =>
+      _selectedCategory = category;
 }
