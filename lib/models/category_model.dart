@@ -24,7 +24,7 @@ class CategoryModel extends HiveObject {
   @HiveField(4)
   HiveList<RecipeModel> recipes;
 
-  CategoryModel(this.name, {this.imageUrl, this.id, this.file});
+  CategoryModel(this.name, {this.imageUrl, this.id, this.file, this.recipes});
 
   @override
   bool operator ==(other) {

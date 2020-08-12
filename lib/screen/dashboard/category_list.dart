@@ -36,9 +36,7 @@ class CategoryList extends StatelessWidget {
                 child: WaveBorderCard(
                   recipeCardName: category.name,
                   width: 200,
-                  imageFile: category.file != null
-                      ? category.file
-                      : null,
+                  imageFile: category.file != null ? category.file : null,
                 ),
                 onTap: () {
                   Navigator.of(context).push(
@@ -49,16 +47,16 @@ class CategoryList extends StatelessWidget {
                       ),
                       transitionsBuilder:
                           (context, animationOne, animationTwo, child) {
-                        var begin = Offset(0.0, 1.0);
-                        var end = Offset.zero;
+                        var begin = 0.0;
+                        var end = 1.0;
                         var curve = Curves.ease;
 
                         var tween = Tween(begin: begin, end: end).chain(
                           CurveTween(curve: curve),
                         );
 
-                        return SlideTransition(
-                          position: animationOne.drive(tween),
+                        return FadeTransition(
+                          opacity: animationOne.drive(tween),
                           child: child,
                         );
                       },

@@ -25,52 +25,36 @@ class CategoryScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView.separated(
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: category.recipes.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image:
-                                    MemoryImage(category.recipes[index].image),
-                                fit: BoxFit.fill),
+              child: category.recipes != null
+                  ? ListView.separated(
+                      separatorBuilder: (context, index) => Divider(),
+                      itemCount: category.recipes.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                height: 80,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: MemoryImage(
+                                          category.recipes[index].image),
+                                      fit: BoxFit.fill),
+                                ),
+                              ),
+                              Text(
+                                category.recipes[index].name,
+                                style: TextStyle(fontSize: 24),
+                              ),
+                            ],
                           ),
-                        ),
-                        Text(
-                          category.recipes[index].name,
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ],
-                    ),
-                  );
-
-                  /*ListTile(
-                    leading: Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: MemoryImage(category.recipes[index].image),
-                          fit: BoxFit.fill
-                        ),
-                      ),
-                    ),
-                    title: Text(
-                      category.recipes[index].name,
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  );*/
-                },
-              ),
+                        );
+                      },
+                    )
+                  : Container(),
             )
           ],
         ),
