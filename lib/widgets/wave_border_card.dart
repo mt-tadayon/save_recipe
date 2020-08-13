@@ -10,13 +10,14 @@ class WaveBorderCard extends StatelessWidget {
   final String imageUrl;
   final double width;
   final Uint8List imageFile;
+  final String categoryId;
 
   const WaveBorderCard(
       {Key key,
       this.recipeCardName = "",
       this.width = 350,
       this.imageUrl = kImageUrlRecipeOfDay,
-      this.imageFile})
+      this.imageFile, this.categoryId})
       : super(key: key);
 
   @override
@@ -32,9 +33,12 @@ class WaveBorderCard extends StatelessWidget {
           width: width,
           child: ClipRRect(
             borderRadius: kWaveBorderRadius,
-            child: LazyNetworkImage(
-              imageUrl: imageUrl,
-              imageFile: imageFile,
+            child: Hero(
+              tag: "category_image_${categoryId}",
+              child: LazyNetworkImage(
+                imageUrl: imageUrl,
+                imageFile: imageFile,
+              ),
             ),
           ),
           decoration: kWaveBoxDecoration,

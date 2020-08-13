@@ -35,6 +35,7 @@ class CategoryList extends StatelessWidget {
                 },
                 child: WaveBorderCard(
                   recipeCardName: category.name,
+                  categoryId: category.id,
                   width: 200,
                   imageFile: category.file != null ? category.file : null,
                 ),
@@ -47,16 +48,8 @@ class CategoryList extends StatelessWidget {
                       ),
                       transitionsBuilder:
                           (context, animationOne, animationTwo, child) {
-                        var begin = 0.0;
-                        var end = 1.0;
-                        var curve = Curves.ease;
-
-                        var tween = Tween(begin: begin, end: end).chain(
-                          CurveTween(curve: curve),
-                        );
-
                         return FadeTransition(
-                          opacity: animationOne.drive(tween),
+                          opacity: animationOne,
                           child: child,
                         );
                       },
