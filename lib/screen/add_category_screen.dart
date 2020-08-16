@@ -19,7 +19,7 @@ class AddCategoryScreen extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/bg_add_category.jpg"),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.cover,
           ),
         ),
         child: Column(children: [
