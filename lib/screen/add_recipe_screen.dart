@@ -40,9 +40,10 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
     var addRecipeProvider =
         Provider.of<AddRecipeProvider>(context, listen: false);
 
+    var isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom != 0;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
       body: Container(
         decoration: kBackground,
         child: Column(
@@ -55,7 +56,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                     bottom: -4,
                     right: -4,
                     child: Container(
-                      height: MediaQuery.of(context).size.height * 0.85,
+                      height: isKeyboardVisible
+                          ? screenHeight
+                          : screenHeight * 0.85,
                       width: MediaQuery.of(context).size.width * 0.8,
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -70,18 +73,20 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                       ),
                     ),
                   ),
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: 30.0,
-                        right: 30,
-                        bottom: 30,
-                        top: MediaQuery.of(context).size.height * 0.15,
-                      ),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        bottom: 10,
+                        top: isKeyboardVisible
+                            ? screenHeight * 0.01
+                            : screenHeight * 0.15),
+                    child: Form(
+                      key: _formKey,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: ListView(
                           children: [
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
