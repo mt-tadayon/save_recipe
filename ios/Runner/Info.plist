@@ -41,5 +41,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>In order to select an image, please accept the permission.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>In order to take a photo, please accept the permission.</string>
 </dict>
 </plist>
