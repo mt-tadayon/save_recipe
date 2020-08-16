@@ -14,8 +14,7 @@ class AddCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -35,64 +34,68 @@ class AddCategoryScreen extends StatelessWidget {
               ),
               child: Form(
                 key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    RecipeFormField(
-                      // TODO: Remove Controller and work with onSave
-                      textEditingController: categoryNameController,
-                      validator: (value) {
-                        return value.isEmpty
-                            ? "Please add a category name"
-                            : null;
-                      },
-                      hintText: "Category name",
-                    ),
-                    SizedBox(height: 20),
-                    Consumer<AddCategoryProvider>(
-                      builder: (_, provider, __) {
-                        return ImagePickerWidget(
-                          onPressed: () async {
-                            provider.selectImage();
-                          },
-                          image: provider.image,
-                        );
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    Builder(
-                      builder: (context) => SubmitButton(
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            var appProvider = Provider.of<AppProvider>(context,
-                                listen: false);
-                            var addCategoryProvider =
-                                Provider.of<AddCategoryProvider>(context,
-                                    listen: false);
-                            bool savedSuccessful =
-                                await addCategoryProvider.saveCategory(
-                                    appProvider, categoryNameController.text);
-
-                            if (savedSuccessful) {
-                              Navigator.pop(context);
-                            } else {
-                              Scaffold.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Row(
-                                    children: [
-                                      Icon(Icons.error_outline),
-                                      SizedBox(width: 10.0),
-                                      Text("This category exists already"),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }
-                          }
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: ListView(
+                    children: <Widget>[
+                      RecipeFormField(
+                        // TODO: Remove Controller and work with onSave
+                        textEditingController: categoryNameController,
+                        validator: (value) {
+                          return value.isEmpty
+                              ? "Please add a category name"
+                              : null;
+                        },
+                        hintText: "Category name",
+                      ),
+                      SizedBox(height: 20),
+                      Consumer<AddCategoryProvider>(
+                        builder: (_, provider, __) {
+                          return ImagePickerWidget(
+                            onPressed: () async {
+                              provider.selectImage();
+                            },
+                            image: provider.image,
+                          );
                         },
                       ),
-                    )
-                  ],
+                      SizedBox(height: 20),
+                      Builder(
+                        builder: (context) => SubmitButton(
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              var appProvider = Provider.of<AppProvider>(
+                                  context,
+                                  listen: false);
+                              var addCategoryProvider =
+                                  Provider.of<AddCategoryProvider>(context,
+                                      listen: false);
+                              bool savedSuccessful =
+                                  await addCategoryProvider.saveCategory(
+                                      appProvider, categoryNameController.text);
+
+                              if (savedSuccessful) {
+                                Navigator.pop(context);
+                              } else {
+                                Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Row(
+                                      children: [
+                                        Icon(Icons.error_outline),
+                                        SizedBox(width: 10.0),
+                                        Text("This category exists already"),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
