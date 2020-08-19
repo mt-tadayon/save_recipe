@@ -14,7 +14,9 @@ class AddCategoryProvider extends ChangeNotifier {
 
   Future<bool> saveCategory(AppProvider provider, String categoryName) async {
     List<CategoryModel> categories = provider.categories;
-    Uint8List imageByteArray = _image.readAsBytesSync();
+    Uint8List imageByteArray = _image?.readAsBytesSync();
+    if (imageByteArray == null) return false;
+
     int dominantImageColor = await _getDominantImageColor(imageByteArray);
 
     final CategoryModel category = CategoryModel(
@@ -42,6 +44,7 @@ class AddCategoryProvider extends ChangeNotifier {
   File get image => _image;
 
   Future<void> selectImage() async {
+    // TODO: Fix it
     _image = await ImagePicker.pickImage(
       source: ImageSource.gallery,
     );

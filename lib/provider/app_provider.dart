@@ -7,23 +7,12 @@ Uuid uuid = Uuid();
 
 class AppProvider extends ChangeNotifier {
   CategoryRepo _repo = CategoryRepo();
-  bool _isLoading = false;
 
   AppProvider() {
     initCategories();
   }
 
   List<CategoryModel> _categories = [];
-
-  void startLoading() {
-    _isLoading = true;
-    notifyListeners();
-  }
-
-  void stopLoading() {
-    _isLoading = false;
-    notifyListeners();
-  }
 
   void addCategory(CategoryModel newCategory) {
     newCategory.id = uuid.v4();
@@ -54,5 +43,4 @@ class AppProvider extends ChangeNotifier {
   }
 
   List<CategoryModel> get categories => _categories;
-  bool get isLoading => _isLoading;
 }
