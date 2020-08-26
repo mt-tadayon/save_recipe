@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:saverecipe/models/category_model.dart';
 
+import 'recipe_detail_screen.dart';
+
 class CategoryScreen extends StatelessWidget {
   final CategoryModel category;
 
@@ -29,36 +31,62 @@ class CategoryScreen extends StatelessWidget {
               alignment: Alignment.center,
             ),
           ),
-          Text(
-            category.name,
-            style: Theme.of(context).textTheme.headline5,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              category.name,
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           Expanded(
             child: category.recipes != null
-                ? ListView.separated(
-                    separatorBuilder: (context, index) => Divider(),
+                ? ListView.builder(
                     itemCount: category.recipes.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Container(
-                              height: 80,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    image: MemoryImage(
-                                        category.recipes[index].image),
-                                    fit: BoxFit.fill),
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Color(0xff707070),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5),
+                            ),
+                          ),
+                          child: ListTile(
+                            title: Text(
+                              category.recipes[index].name,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
-                              category.recipes[index].name,
-                              style: TextStyle(fontSize: 24),
+                            trailing: Icon(
+                              Icons.arrow_forward,
+                              size: 27,
+                              color: Color(0xff000000),
                             ),
-                          ],
+                            leading: Icon(
+                              Icons.favorite_border,
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      RecipeDetailScreen(
+                                    recipe: category.recipes[index],
+                                    appBarColor: category.dominantImageColor,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       );
                     },
@@ -70,3 +98,27 @@ class CategoryScreen extends StatelessWidget {
     );
   }
 }
+
+/*
+Container(
+child: Row(
+mainAxisAlignment: MainAxisAlignment.spaceAround,
+children: [
+Container(
+height: 80,
+width: 80,
+decoration: BoxDecoration(
+shape: BoxShape.circle,
+image: DecorationImage(
+image: MemoryImage(
+category.recipes[index].image),
+fit: BoxFit.fill),
+),
+),
+Text(
+category.recipes[index].name,
+style: TextStyle(fontSize: 24),
+),
+],
+),
+);*/
