@@ -8,31 +8,30 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var imageHeight = MediaQuery.of(context).size.height / 3;
     return Scaffold(
       appBar: AppBar(
         title: Text(category.name),
         backgroundColor: Color(category.dominantImageColor ?? 0xFF123456),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Hero(
             tag: "category_image_${category.id}",
-            child: category.file != null
-                ? Image.memory(category.file)
-                : Image.network(
-                    category.imageUrl,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: 400,
-                  ),
-          ),
-          Center(
-            child: Material(
-              child: Text(
-                category.name,
-                style: Theme.of(context).textTheme.headline5,
-              ),
+            child: Image(
+              image: category.file != null
+                  ? MemoryImage(category.file)
+                  : NetworkImage(category.imageUrl),
+              height: imageHeight,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
             ),
+          ),
+          Text(
+            category.name,
+            style: Theme.of(context).textTheme.headline5,
           ),
           Expanded(
             child: category.recipes != null
