@@ -36,6 +36,11 @@ class CategoryDeleteDialog extends StatelessWidget {
           },
         ),
         FlatButton(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(5),
+            ),
+          ),
           child: Text('Delete'),
           onPressed: () {
             // TODO: Be sure to delete all recipes in this category
