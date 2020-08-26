@@ -31,6 +31,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
     var addRecipeProvider =
         Provider.of<AddRecipeProvider>(context, listen: false);
 
+    if(appProvider.categories.isNotEmpty)
     addRecipeProvider.setSelectedCategory(appProvider.categories[0]);
     super.initState();
   }
