@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:saverecipe/models/category_model.dart';
 import 'package:saverecipe/models/recipe_model.dart';
 import 'package:saverecipe/repository/recipe_repo.dart';
+import 'package:saverecipe/utils/image_helper.dart';
 
 class AddRecipeProvider extends ChangeNotifier {
   // TODO: Init somehow our selectedCategory
@@ -15,9 +16,8 @@ class AddRecipeProvider extends ChangeNotifier {
   //TODO: user dependency injection
   RecipeRepo _recipeRepo = RecipeRepo();
 
-  // TODO: Add a compression of the image before saving to DB
   Future<bool> saveRecipe() async {
-    Uint8List imageByteArray = _image.readAsBytesSync();
+    Uint8List imageByteArray = await ImageHelper.compressImage(_image);
     RecipeModel recipe = RecipeModel(_recipeName, imageByteArray);
     await _recipeRepo.saveRecipe(recipe);
     _selectedCategory.recipes =

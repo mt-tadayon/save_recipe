@@ -4,18 +4,18 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:saverecipe/models/category_model.dart';
 import 'package:saverecipe/provider/app_provider.dart';
+import 'package:saverecipe/utils/image_helper.dart';
 
 class AddCategoryProvider extends ChangeNotifier {
   File _image;
 
   Future<bool> saveCategory(AppProvider provider, String categoryName) async {
     List<CategoryModel> categories = provider.categories;
-    Uint8List imageByteArray = await _compressImage(_image);
+    Uint8List imageByteArray = await ImageHelper.compressImage(_image);
     if (imageByteArray == null) return false;
 
     int dominantImageColor = await _getDominantImageColor(imageByteArray);
@@ -51,14 +51,5 @@ class AddCategoryProvider extends ChangeNotifier {
       source: ImageSource.gallery,
     );
     notifyListeners();
-  }
-
-  Future<Uint8List> _compressImage(File image) async {
-    return await FlutterImageCompress.compressWithFile(
-      image.absolute.path,
-      minHeight: 1280,
-      minWidth: 1980,
-      quality: 40,
-    );
   }
 }
