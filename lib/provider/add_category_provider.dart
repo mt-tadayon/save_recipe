@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:saverecipe/models/category_model.dart';
@@ -14,7 +15,7 @@ class AddCategoryProvider extends ChangeNotifier {
 
   Future<bool> saveCategory(AppProvider provider, String categoryName) async {
     List<CategoryModel> categories = provider.categories;
-    Uint8List imageByteArray = _image?.readAsBytesSync();
+    Uint8List imageByteArray = await _compressImage(_image);
     if (imageByteArray == null) return false;
 
     int dominantImageColor = await _getDominantImageColor(imageByteArray);
@@ -44,10 +45,20 @@ class AddCategoryProvider extends ChangeNotifier {
   File get image => _image;
 
   Future<void> selectImage() async {
-    // TODO: Fix it
+    // TODO: Remove the deprecations
+    // ignore: deprecated_member_use
     _image = await ImagePicker.pickImage(
       source: ImageSource.gallery,
     );
     notifyListeners();
+  }
+
+  Future<Uint8List> _compressImage(File image) async {
+    return await FlutterImageCompress.compressWithFile(
+      image.absolute.path,
+      minHeight: 1280,
+      minWidth: 1980,
+      quality: 40,
+    );
   }
 }

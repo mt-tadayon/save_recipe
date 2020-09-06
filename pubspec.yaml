@@ -23,6 +23,7 @@ dependencies:
   palette_generator: ^0.2.3
   loading_overlay: ^0.2.1
   flutter_spinkit: "^4.1.2"
+  flutter_image_compress: ^0.7.0
 
 dev_dependencies:
   flutter_test:

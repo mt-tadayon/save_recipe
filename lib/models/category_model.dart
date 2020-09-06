@@ -4,8 +4,6 @@ import 'package:hive/hive.dart';
 import 'package:saverecipe/models/recipe_model.dart';
 part 'category_model.g.dart';
 
-// TODO: Poll said remove g files from Git Repo
-
 @HiveType(typeId: 0)
 class CategoryModel extends HiveObject {
   @HiveField(0)

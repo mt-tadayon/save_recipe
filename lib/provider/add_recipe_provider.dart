@@ -15,6 +15,7 @@ class AddRecipeProvider extends ChangeNotifier {
   //TODO: user dependency injection
   RecipeRepo _recipeRepo = RecipeRepo();
 
+  // TODO: Add a compression of the image before saving to DB
   Future<bool> saveRecipe() async {
     Uint8List imageByteArray = _image.readAsBytesSync();
     RecipeModel recipe = RecipeModel(_recipeName, imageByteArray);
