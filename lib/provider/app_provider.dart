@@ -43,4 +43,10 @@ class AppProvider extends ChangeNotifier {
   }
 
   List<CategoryModel> get categories => _categories;
+
+  void toggleFavorite(int categoryIndex, int recipeIndex) {
+    var recipe = _categories[categoryIndex].recipes[recipeIndex];
+    recipe.isFavorite = !recipe.isFavorite;
+    notifyListeners();
+  }
 }

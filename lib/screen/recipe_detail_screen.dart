@@ -1,25 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:saverecipe/models/recipe_model.dart';
+import 'package:saverecipe/provider/app_provider.dart';
 
 class RecipeDetailScreen extends StatelessWidget {
-  final RecipeModel recipe;
   final int appBarColor;
+  final int categoryIndex;
+  final int recipeIndex;
 
-  const RecipeDetailScreen({Key key, this.recipe, this.appBarColor})
-      : super(key: key);
+  const RecipeDetailScreen({
+    Key key,
+    this.appBarColor,
+    this.categoryIndex,
+    this.recipeIndex,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    RecipeModel recipe = context.select(
+      (AppProvider value) =>
+          value.categories[categoryIndex].recipes[recipeIndex],
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(recipe.name),
         backgroundColor: Color(appBarColor ?? 0xFF123456),
         actions: [
           IconButton(
-            icon: Icon(Icons.favorite_border),
+            icon: recipe.isFavorite
+                ? Icon(Icons.favorite)
+                : Icon(Icons.favorite_border),
             onPressed: () {
-              //TODO: Save heart in Hive and change the icon in this screen and in the card
+              context
+                  .read<AppProvider>()
+                  .toggleFavorite(categoryIndex, recipeIndex);
             },
           )
         ],

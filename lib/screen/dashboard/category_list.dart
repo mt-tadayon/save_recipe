@@ -43,15 +43,11 @@ class CategoryList extends StatelessWidget {
                   Navigator.of(context).push(
                     PageRouteBuilder(
                       pageBuilder: (context, animationOne, animationTwo) =>
-                          CategoryScreen(
-                        category: category,
-                      ),
+                          CategoryScreen(categoryIndex: index),
                       transitionsBuilder:
                           (context, animationOne, animationTwo, child) {
                         return FadeTransition(
-                          opacity: animationOne,
-                          child: child,
-                        );
+                            opacity: animationOne, child: child);
                       },
                       transitionDuration: Duration(seconds: 1),
                     ),

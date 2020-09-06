@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:saverecipe/models/category_model.dart';
+import 'package:saverecipe/provider/app_provider.dart';
 
 import 'recipe_detail_screen.dart';
 
 class CategoryScreen extends StatelessWidget {
-  final CategoryModel category;
+  final int categoryIndex;
 
-  CategoryScreen({this.category});
+  CategoryScreen({this.categoryIndex});
 
   @override
   Widget build(BuildContext context) {
+    CategoryModel category = context.select(
+      (AppProvider value) => value.categories[categoryIndex],
+    );
+
     var imageHeight = MediaQuery.of(context).size.height / 3;
     return Scaffold(
       appBar: AppBar(
@@ -71,16 +77,18 @@ class CategoryScreen extends StatelessWidget {
                               size: 27,
                               color: Color(0xff000000),
                             ),
-                            leading: Icon(
-                              Icons.favorite_border,
-                            ),
+                            leading: category.recipes[index].isFavorite
+                                ? Icon(Icons.favorite)
+                                : Icon(Icons.favorite_border),
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
+
                                   builder: (BuildContext context) =>
                                       RecipeDetailScreen(
-                                    recipe: category.recipes[index],
+                                    recipeIndex: index,
+                                    categoryIndex: categoryIndex,
                                     appBarColor: category.dominantImageColor,
                                   ),
                                 ),
